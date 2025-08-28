@@ -1,0 +1,327 @@
+[
+  {
+    "name": "Společný život novomanželů",
+    "questions": [
+      {
+        "question": "Kde byl jejich první společný byt?",
+        "answers": [
+          "Luxusní penthouse na Vinohradech",
+          "Garsonka na Jižním Městě",
+          "Podkrovní byt na Žižkově",
+          "Karlínské sklepení"
+        ],
+        "correctAnswer": 3,
+        "pointValue": 1,
+        "answered": false
+      },
+      {
+        "question": "Už je to nějaký pátek, co se ti dva poznali. Jak dlouho už to ale vlastně je?",
+        "answers": [
+          "15 let",
+          "9 let",
+          "12 let",
+          "6 let"
+        ],
+        "correctAnswer": 0,
+        "pointValue": 2,
+        "answered": false
+      },
+      {
+        "question": "Oba milují psy a už mají vybráno! Pokud by se rozhodli si psa pořídit, jaké plemeno chlupáče by jim mělo dělat radost (a nepořádek)?",
+        "answers": [
+          "Zlatý retrívr",
+          "Čivava v kabelce",
+          "Kanadský retrívr",
+          "Australský ovčák"
+        ],
+        "correctAnswer": 2,
+        "pointValue": 3,
+        "answered": false
+      },
+      {
+        "question": "I v té největší lásce existují neshody. Na které věci se ti dva rozhodně nikdy neshodnou?",
+        "answers": [
+          "Ananas na pizze",
+          "Kdo bude řídit cestou z hospody",
+          "Beraní vs. kozí rohy",
+          "Správný recept na bramborový salát"
+        ],
+        "correctAnswer": 2,
+        "pointValue": 4,
+        "answered": false
+      },
+      {
+        "question": "Brzy se opět vydají pryč z jejich bydlení v Praze! Ve které obci zapouštějí kořeny a plánují stavět?",
+        "answers": [
+          "Lety",
+          "Měňany",
+          "Řevnice",
+          "Zadní Třebaň"
+        ],
+        "correctAnswer": 1,
+        "pointValue": 5,
+        "answered": false
+      }
+    ]
+  },
+  {
+    "name": "Honzíkova cesta",
+    "questions": [
+      {
+        "question": "Honza je od mala skrytý bojovník! Jak se jmenuje a odkud pochází bojové umění, kterému se věnoval?",
+        "answers": [
+          "Karate, Japonsko",
+          "Kung-fu, Čína",
+          "Capoeira, Brazílie",
+          "Taekwondo, Korea"
+        ],
+        "correctAnswer": 3,
+        "pointValue": 1,
+        "answered": false
+      },
+      {
+        "question": "Když Honza poprvé uviděl film Zohan, rozhodl se, že bude dělat vlasy hedvábně hebké. Na kom/čem se učil dělat profesionální účesy?",
+        "answers": [
+          "Na alpakách",
+          "Na ovcích",
+          "Na sobě",
+          "Na psech"
+        ],
+        "correctAnswer": 0,
+        "pointValue": 2,
+        "answered": false
+      },
+      {
+        "question": "Honza není žádný troškař a míří vysoko. Do jaké maximální nadmořské výšky se mu podařilo vyšplhat?",
+        "answers": [
+          "4810 m",
+          "5895 m",
+          "8848 m",
+          "6470 m"
+        ],
+        "correctAnswer": 3,
+        "pointValue": 3,
+        "answered": false
+      },
+      {
+        "question": "Na Honzovi je znát, že prošel americkým školním systémem. Ve kterém americkém státě Honza rok studoval?",
+        "answers": [
+          "Kalifornie",
+          "Colorado",
+          "Texas",
+          "Florida"
+        ],
+        "correctAnswer": 1,
+        "pointValue": 4,
+        "answered": false
+      },
+      {
+        "question": "Honza je velice šikovný chlapec, jen rád dokazuje že mozek opravdu má. Kolikrát se mu povedlo mít otřes mozku?",
+        "answers": [
+          "Ani jednou, je nesmrtelný",
+          "3x - snowboard, Taekwondo a upadnutí",
+          "Jen jednou, při pádu z barové stoličky",
+          "Pětkrát, už to vlastně ani nepočítá"
+        ],
+        "correctAnswer": 1,
+        "pointValue": 5,
+        "answered": false
+      }
+    ]
+  },
+  {
+    "name": "Na Plzeň s Naty",
+    "questions": [
+      {
+        "question": "Mimo výuky studentů v Plzni, také Naty pracovala v jedné známé pražské nemocnici. V které to bylo?",
+        "answers": [
+          "Nemocnice Na Bulovce",
+          "Všeobecná fakultní nemocnice",
+          "Fakultní nemocnice v Motole",
+          "Ústřední vojenská nemocnice"
+        ],
+        "correctAnswer": 2,
+        "pointValue": 1,
+        "answered": false
+      },
+      {
+        "question": "Každý má svou achillovu patu. V případě Naty je touto patou spíše jeden druh oblíbeného ovoce. Kterého?",
+        "answers": [
+          "Banány",
+          "Jahody",
+          "Kiwi",
+          "Jablka"
+        ],
+        "correctAnswer": 0,
+        "pointValue": 2,
+        "answered": false
+      },
+      {
+        "question": "Naty má super a záslužnou práci, jen málokdo ví, jak se vlastně přesně jmenuje. Jak zní její oficiální pracovní pozice??",
+        "answers": [
+          "Fyzioterapeutka pro miminka",
+          "Pediatrická logopedka",
+          "Speciální pedagožka",
+          "Dětský ergoterapeut"
+        ],
+        "correctAnswer": 3,
+        "pointValue": 3,
+        "answered": false
+      },
+      {
+        "question": "Malé tajemství odhaleno! Co za umělecké dílko si Naty nechala zvěčnit na... ehm, na pozadí?",
+        "answers": [
+          "Srdíčko",
+          "Hvězdičku",
+          "Hruštičku",
+          "Půlitr piva"
+        ],
+        "correctAnswer": 2,
+        "pointValue": 4,
+        "answered": false
+      },
+      {
+        "question": "Skromnost stranou! Ve kterém sportu o sobě Naty (možná po pár skleničkách) tvrdí, že je absolutní světová špička?",
+        "answers": [
+          "V petangu",
+          "V kulečníku",
+          "V šipkách",
+          "Ve stolním fotbálku"
+        ],
+        "correctAnswer": 2,
+        "pointValue": 5,
+        "answered": false
+      }
+    ]
+  },
+  {
+    "name": "Na cestách",
+    "questions": [
+      {
+        "question": "Která aktivita nemůže chybět u většiny jejich výletů?",
+        "answers": [
+          "",
+          "",
+          "",
+          "Lezení"
+        ],
+        "correctAnswer": 3,
+        "pointValue": 1,
+        "answered": false
+      },
+      {
+        "question": " Co se stalo Naty, když Naty nakoupila v Jižní Americe tamní sladkost?",
+        "answers": [
+          "zfetovala celou rodinu Hruškovic",
+          "",
+          "",
+          ""
+        ],
+        "correctAnswer": 0,
+        "pointValue": 2,
+        "answered": false
+      },
+      {
+        "question": "Jaký vůz si pořídili pro společné cesty?",
+        "answers": [
+          "",
+          "Ford transit custom ",
+          "",
+          ""
+        ],
+        "correctAnswer": 1,
+        "pointValue": 3,
+        "answered": false
+      },
+      {
+        "question": "kde Honza požádal Naty o ruku? (nestačí země ale i oblast!)",
+        "answers": [
+          "",
+          "",
+          "",
+          "Montserrat, Španělsko "
+        ],
+        "correctAnswer": 3,
+        "pointValue": 5,
+        "answered": false
+      },
+      {
+        "question": "Jak opilí jsou novomanželé?",
+        "answers": [
+          "Divadlo na Vinohradech",
+          "Národní divadlo",
+          "Divadlo Semafor",
+          "Stavovské divadlo"
+        ],
+        "correctAnswer": 1,
+        "pointValue": 10,
+        "answered": false
+      }
+    ]
+  },
+  {
+    "name": "Sport",
+    "questions": [
+      {
+        "question": "Který sport je spojen s Wimbledonem?",
+        "answers": [
+          "Fotbal",
+          "Golf",
+          "Tenis",
+          "Kriket"
+        ],
+        "correctAnswer": 2,
+        "pointValue": 10,
+        "answered": false
+      },
+      {
+        "question": "Kolik hráčů je v jednom hokejovém týmu na ledě při hře?",
+        "answers": [
+          "5",
+          "6",
+          "7",
+          "11"
+        ],
+        "correctAnswer": 1,
+        "pointValue": 15,
+        "answered": false
+      },
+      {
+        "question": "Který český hokejista je známý pod číslem 68?",
+        "answers": [
+          "Dominik Hašek",
+          "Patrik Eliáš",
+          "Jaromír Jágr",
+          "David Pastrňák"
+        ],
+        "correctAnswer": 2,
+        "pointValue": 10,
+        "answered": false
+      },
+      {
+        "question": "Jak dlouhý je běžecký maraton?",
+        "answers": [
+          "21.0975 km",
+          "35 km",
+          "42.195 km",
+          "50 km"
+        ],
+        "correctAnswer": 2,
+        "pointValue": 25,
+        "answered": false
+      },
+      {
+        "question": "Ve kterém sportu proslula Ester Ledecká?",
+        "answers": [
+          "Biatlon a rychlobruslení",
+          "Sjezdové lyžování a snowboarding",
+          "Běh na lyžích a skoky na lyžích",
+          "Tenis a plavání"
+        ],
+        "correctAnswer": 1,
+        "pointValue": 20,
+        "answered": false
+      }
+    ]
+  }
+]
