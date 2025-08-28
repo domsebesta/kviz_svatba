@@ -98,3 +98,18 @@ header h1 { margin:.2rem 0 0; font-size:2.2rem; }
 /* Větší mezera mezi tlačítky v restart modálu */
 .modal-footer.between { justify-content:space-between; gap:1.2rem; width:100%; }
 .modal-footer.between .confirm-btn, .modal-footer.between .cancel-btn { flex:1; }
+
+/* Media a škála */
+.media-wrapper { display:flex; justify-content:center; align-items:center; background:#f2f8ff; padding:1rem; border-radius:10px; border:2px solid #d7e8f7; }
+.media-img { max-width:100%; max-height:320px; border-radius:8px; object-fit:contain; }
+.media-video { max-width:100%; max-height:360px; border-radius:8px; }
+.scale-section { display:flex; flex-direction:column; gap:1rem; }
+.scale-buttons { display:grid; grid-template-columns:repeat(auto-fit,minmax(48px,1fr)); gap:.6rem; }
+.scale-btn { background:#1d74d4; color:#fff; border:2px solid #135ca9; border-radius:10px; font-size:1rem; padding:.65rem 0; font-weight:600; cursor:pointer; transition:.18s; }
+.scale-btn:hover:not(:disabled) { border-color:#ffe08a; }
+.scale-btn.pending { outline:3px solid #ffe08a; }
+.scale-btn.correct { background:#2e9e41; border-color:#2e9e41; }
+.scale-btn.wrong { background:#d93025; border-color:#b71f1f; }
+.feedback { font-weight:600; font-size:1.05rem; }
+.feedback.ok { color:#2e9e41; }
+.feedback.fail { color:#d93025; }

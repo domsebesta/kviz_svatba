@@ -291,7 +291,7 @@
       },
       {
         "media": {
-          "type": "image",
+          "type": "video",
           "path": "src/assets/fotka4.mp4"
         },
         "correctAnswer": 10,

@@ -2,6 +2,11 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import type { Category, Question } from './types';
 import rawData from '../data.json';
+import fotka1 from './assets/fotka1.jpeg';
+import video2 from './assets/fotka2.mp4';
+import fotka3 from './assets/fotka3.jpeg';
+import video4 from './assets/fotka4.mp4';
+import fotka5 from './assets/fotka5.jpeg';
 
 interface StoredState {
   categories: Category[];
@@ -12,30 +17,51 @@ interface StoredState {
 
 const LS_KEY = 'quizState_v2';
 
+const mediaMap: Record<string, string> = {
+  'fotka1.jpeg': fotka1,
+  'fotka2.mp4': video2,
+  'fotka3.jpeg': fotka3,
+  'fotka4.mp4': video4,
+  'fotka5.jpeg': fotka5,
+};
+
+function resolveMediaPath(p: string) {
+  const file = p.split('/').pop() || p;
+  if (mediaMap[file]) return mediaMap[file];
+  // fallback na původní chování (dev mód může obsloužit /src/assets/* )
+  if (p.startsWith('src/')) return '/' + p; // dev server
+  return p;
+}
+
 // Použijeme všech 5 okruhů; 5. může mít odlišnou strukturu (zatím placeholdery pro budoucí úpravy).
 function loadInitialCategories(): Category[] {
   const base: any[] = rawData as any[];
-  return base.slice(0, 5).map(cat => {
+  return base.slice(0, 5).map((cat) => {
     const questions = (cat.questions || []).map((q: any) => {
       if (Array.isArray(q.answers)) {
         return q; // standardní otázka
       }
-      // Speciální typ otázky (zatím bez implementace) => vytvoříme nekliknutelný placeholder
+      if (q.media) {
+        // Škálová mediální otázka (1-10)
+        return {
+          question: 'Ohodnoť (1 - 10)',
+          answers: [],
+          correctAnswer: q.correctAnswer, // hodnota 1..10
+          pointValue: q.pointValue || 0,
+            answered: q.answered ?? false,
+          media: q.media,
+          scale: true
+        } as Question;
+      }
       return {
         question: q.prompt || 'Speciální otázka (brzy)',
         answers: ['—', '—', '—', '—'],
-        correctAnswer: -1, // žádná správná
+        correctAnswer: -1,
         pointValue: q.pointValue || 0,
-        answered: true // greyed out
+        answered: true
       } as Question;
     }).sort((a: any, b: any) => a.pointValue - b.pointValue);
-
-    // Doplnění chybějících standardních pointValue (1..5) pokud by nějaké chyběly
-    // (zachová jednoduchost; nevyužito pokud data kompletní)
-    return {
-      name: cat.name,
-      questions
-    };
+    return { name: cat.name, questions };
   });
 }
 
@@ -51,11 +77,6 @@ function restoreState(): StoredState | null {
 
 function persist(state: StoredState) {
   localStorage.setItem(LS_KEY, JSON.stringify(state));
-}
-
-interface ModalState {
-  categoryIndex: number;
-  questionIndex: number;
 }
 
 function App() {
@@ -97,7 +118,9 @@ function App() {
   const handleAnswer = (answerIdx: number) => {
     if (!currentQuestion || answerEvaluated) return;
     setSelectedAnswer(answerIdx);
-    const isCorrect = answerIdx === currentQuestion.correctAnswer;
+    const isCorrect = currentQuestion.scale
+      ? answerIdx === currentQuestion.correctAnswer // u škálové otázky je přímo hodnota
+      : answerIdx === currentQuestion.correctAnswer; // u standardní index
 
     // Aktualizace categories (answered = true) a skóre pokud správně
     setCategories(prev => prev.map((cat, ci) => {
@@ -109,7 +132,6 @@ function App() {
         )
       };
     }));
-
     if (isCorrect) {
       setScores(s => activePlayer === 1
         ? { ...s, player1: s.player1 + currentQuestion.pointValue }
@@ -195,35 +217,80 @@ function App() {
       {modal && currentQuestion && (
         <div className="modal-overlay">
           <div className="modal">
+            {currentQuestion.media && (
+              <div className="media-wrapper">
+                {currentQuestion.media.type === 'image' && (
+                  <img src={resolveMediaPath(currentQuestion.media.path)} alt="media" className="media-img" />
+                )}
+                {currentQuestion.media.type === 'video' && (
+                  <video className="media-video" controls>
+                    <source src={resolveMediaPath(currentQuestion.media.path)} />
+                    Váš prohlížeč nepodporuje video.
+                  </video>
+                )}
+              </div>
+            )}
             <h2>{currentQuestion.question}</h2>
-            <div className="answers">
-              {currentQuestion.answers.map((ans, i) => {
-                const isSelected = selectedAnswer === i;
-                const isCorrect = currentQuestion.correctAnswer === i;
-                let cls = 'answer-btn';
-                if (answerEvaluated) {
-                  if (isCorrect) cls += ' correct';
-                  if (isSelected && !isCorrect) cls += ' wrong';
-                } else if (isSelected) {
-                  cls += ' pending';
-                }
-                return (
-                  <button
-                    key={i}
-                    className={cls}
-                    disabled={answerEvaluated}
-                    onClick={() => handleAnswer(i)}
-                  >
-                    {ans || <em>&nbsp;</em>}
-                  </button>
-                );
-              })}
-            </div>
+            {!currentQuestion.scale && (
+              <div className="answers">
+                {currentQuestion.answers.map((ans, i) => {
+                  const isSelected = selectedAnswer === i;
+                  const isCorrect = currentQuestion.correctAnswer === i;
+                  let cls = 'answer-btn';
+                  if (answerEvaluated) {
+                    if (isCorrect) cls += ' correct';
+                    if (isSelected && !isCorrect) cls += ' wrong';
+                  } else if (isSelected) {
+                    cls += ' pending';
+                  }
+                  return (
+                    <button
+                      key={i}
+                      className={cls}
+                      disabled={answerEvaluated}
+                      onClick={() => handleAnswer(i)}
+                    >
+                      {ans || <em>&nbsp;</em>}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+            {currentQuestion.scale && (
+              <div className="scale-section">
+                <div className="scale-buttons">
+                  {Array.from({ length: 10 }).map((_, idx) => {
+                    const val = idx + 1;
+                    const isSelected = selectedAnswer === val;
+                    let cls = 'scale-btn';
+                    if (answerEvaluated) {
+                      if (val === currentQuestion.correctAnswer) cls += ' correct';
+                      if (isSelected && val !== currentQuestion.correctAnswer) cls += ' wrong';
+                    } else if (isSelected) cls += ' pending';
+                    return (
+                      <button
+                        key={val}
+                        className={cls}
+                        disabled={answerEvaluated}
+                        onClick={() => handleAnswer(val)}
+                      >{val}</button>
+                    );
+                  })}
+                </div>
+                {answerEvaluated && (
+                  <div className={`feedback ${selectedAnswer === currentQuestion.correctAnswer ? 'ok' : 'fail'}`}>
+                    {selectedAnswer === currentQuestion.correctAnswer
+                      ? 'Máš to správně'
+                      : `Máš to špatně, správná odpověď je ${currentQuestion.correctAnswer}`}
+                  </div>
+                )}
+              </div>
+            )}
             <div className="modal-footer">
               {answerEvaluated ? (
                 <button className="close-btn" onClick={closeModal}>Zpět na přehled</button>
               ) : (
-                <div className="hint">Vyber odpověď...</div>
+                <div className="hint">{currentQuestion.scale ? 'Vyber číslo 1–10...' : 'Vyber odpověď...'}</div>
               )}
             </div>
           </div>
