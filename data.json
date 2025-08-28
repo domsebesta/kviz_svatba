@@ -198,51 +198,63 @@
     "name": "Na cestách",
     "questions": [
       {
-        "question": "Která aktivita nemůže chybět u většiny jejich výletů?",
+        "question": "Jejich výlety mají jedno společné téma. Bez které aktivity si je nedovedou představit?",
         "answers": [
-          "",
-          "",
-          "",
-          "Lezení"
+          "Ochutnávání lokálního piva",
+          "Ležení na pláži",
+          "Návštěva všech muzeí v okolí",
+          "Lezení po horách a skalách"
         ],
         "correctAnswer": 3,
         "pointValue": 1,
         "answered": false
       },
       {
-        "question": " Co se stalo Naty, když Naty nakoupila v Jižní Americe tamní sladkost?",
+        "question": "Dobrodružství v Jižní Americe! Co se přihodilo, když Naty s dobrým úmyslem nakoupila místní sladkost?",
         "answers": [
-          "zfetovala celou rodinu Hruškovic",
-          "",
-          "",
-          ""
+          "Zfetovala celou rodinu Hruškovic",
+          "Zjistila, že je to sušený hmyz",
+          "Zaplatila za ni omylem stonásobek",
+          "Dostala prudkou alergickou reakci"
         ],
         "correctAnswer": 0,
         "pointValue": 2,
         "answered": false
       },
       {
-        "question": "Jaký vůz si pořídili pro společné cesty?",
+        "question": "Svoboda na čtyřech kolech! Jaký vůz si pořídili, aby mohli své toulavé boty vozit po světě?",
         "answers": [
-          "",
-          "Ford transit custom ",
-          "",
-          ""
+          "Volkswagen California",
+          "Ford transit custom",
+          "Škoda Octavia Combi",
+          "Stará obytná Avie"
         ],
         "correctAnswer": 1,
         "pointValue": 3,
         "answered": false
       },
       {
-        "question": "kde Honza požádal Naty o ruku? (nestačí země ale i oblast!)",
+        "question": "Ten velký okamžik! Kde přesně se Honza pochlapil a požádal Naty o ruku? (Nestačí jen země!)",
         "answers": [
-          "",
-          "",
-          "",
-          "Montserrat, Španělsko "
+          "Lago de Garda, Itálie",
+          "Trolltunga, Norsko",
+          "Aiguille du Midi, Francie",
+          "Montserrat, Španělsko"
         ],
         "correctAnswer": 3,
-        "pointValue": 5,
+        "pointValue": 4,
+        "answered": false
+      },
+      {
+        "question": "Nic složitého. Kam se chystají po tomhle víkendu vyrazit?",
+        "answers": [
+          "Na pivko do Plzně",
+          "Na výšlap do Německa",
+          "Do Rakouských Alp",
+          "To ještě ani oni netuší"
+        ],
+        "correctAnswer": 3,
+        "pointValue": 4,
         "answered": false
       }
     ]
@@ -253,51 +265,46 @@
       {
         "media": {
           "type": "image",
-          "path": "media/foto_1.jpg"
+          "path": "src/assets/fotka1.jpeg"
         },
-        "prompt": "Jak moc si Honza užil tento okamžik? (1 = utrpení, 10 = absolutní blaho)",
-        "correctAnswer": 9,
-        "pointValue": 3,
-        "answered": false
-      },
-      {
-        "media": {
-          "type": "image",
-          "path": "media/foto_2.jpg"
-        },
-        "prompt": "Na stupnici 1-10, jak moc byla Naty překvapená?",
-        "correctAnswer": 10,
-        "pointValue": 3,
+        "correctAnswer": 5,
+        "pointValue": 1,
         "answered": false
       },
       {
         "media": {
           "type": "video",
-          "path": "media/video_1.mp4"
+          "path": "src/assets/fotka2.mp4"
         },
-        "prompt": "Ohodnoťte Honzův taneční styl na škále 1-10 (1 = prkno, 10 = Travolta).",
-        "correctAnswer": 4,
+        "correctAnswer": 8,
+        "pointValue": 2,
+        "answered": false
+      },
+      {
+        "media": {
+          "type": "image",
+          "path": "src/assets/fotka3.jpeg"
+        },
+        "correctAnswer": 6,
         "pointValue": 3,
         "answered": false
       },
       {
         "media": {
           "type": "image",
-          "path": "media/foto_3.jpg"
+          "path": "src/assets/fotka4.mp4"
         },
-        "prompt": "Kolik panáků v sobě měla Naty v momentě focení? (Odpovězte číslem 1-10)",
+        "correctAnswer": 10,
+        "pointValue": 4,
+        "answered": false
+      },
+      {
+        "media": {
+          "type": "image",
+          "path": "src/assets/fotka5.jpeg"
+        },
         "correctAnswer": 7,
-        "pointValue": 3,
-        "answered": false
-      },
-      {
-        "media": {
-          "type": "image",
-          "path": "media/foto_4.jpg"
-        },
-        "prompt": "Jak moc se sem chtěl vrátit Honza? (1 = nikdy více, 10 = hned zítra)",
-        "correctAnswer": 2,
-        "pointValue": 3,
+        "pointValue": 5,
         "answered": false
       }
     ]
