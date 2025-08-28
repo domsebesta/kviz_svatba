@@ -97,6 +97,7 @@ function App() {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [answerEvaluated, setAnswerEvaluated] = useState(false);
   const [tempNames, setTempNames] = useState({ player1: playerNames.player1, player2: playerNames.player2 });
+  const [showWinModal, setShowWinModal] = useState(false);
 
   // Persist
   useEffect(() => {
@@ -152,6 +153,7 @@ function App() {
   const winnerNumber = allAnswered && scores.player1 !== scores.player2
     ? (scores.player1 > scores.player2 ? 1 : 2)
     : null;
+  const winnerName = winnerNumber ? (winnerNumber === 1 ? playerNames.player1 : playerNames.player2) : null;
 
   const confirmNames = () => {
     const p1 = tempNames.player1.trim() || 'Hráč 1';
@@ -174,20 +176,34 @@ function App() {
     setModal(null);
   };
 
+  const startNewGameFromWin = () => {
+    // Reset podobně jako restart, ale rovnou otevře modal pro jména
+    localStorage.removeItem(LS_KEY);
+    setCategories(loadInitialCategories());
+    setScores({ player1: 0, player2: 0 });
+    setActivePlayer(1);
+    setPlayerNames({ player1: 'Hráč 1', player2: 'Hráč 2' });
+    setTempNames({ player1: 'Hráč 1', player2: 'Hráč 2' });
+    setShowWinModal(false);
+    setShowNameModal(true);
+    setModal(null);
+  };
+
+  const showWinner = () => {
+    setShowWinModal(true);
+    setModal(null);
+  };
+
   return (
     <div className="app-wrapper">
       <header className="top-bar">
-        <h1>Kvíz</h1>
+        <h1>Svatební kvíz</h1>
         {/* Restart odstraněn z top baru */}
       </header>
       <div className="scores">
         <div className={`score ${activePlayer === 1 ? 'active' : ''}`}>{playerNames.player1}: {scores.player1}</div>
         <div className={`score ${activePlayer === 2 ? 'active' : ''}`}>{playerNames.player2}: {scores.player2}</div>
       </div>
-
-      {allAnswered && (
-        <div className="game-over">{winnerNumber ? `Vyhrál hráč ${winnerNumber}.` : 'Remíza.'}</div>
-      )}
 
       <div className="grid-container">
         <button className="restart-btn grid-restart" onClick={openRestart}>Restart</button>
@@ -288,7 +304,11 @@ function App() {
             )}
             <div className="modal-footer">
               {answerEvaluated ? (
-                <button className="close-btn" onClick={closeModal}>Zpět na přehled</button>
+                allAnswered ? (
+                  <button className="close-btn" onClick={showWinner}>Zobraz vítěze</button>
+                ) : (
+                  <button className="close-btn" onClick={closeModal}>Zpět na přehled</button>
+                )
               ) : (
                 <div className="hint">{currentQuestion.scale ? 'Vyber číslo 1–10...' : 'Vyber odpověď...'}</div>
               )}
@@ -301,21 +321,23 @@ function App() {
         <div className="modal-overlay">
           <div className="modal name-modal">
             <h2>Nastavení hráčů</h2>
-            <label className="input-row">Jméno hráče 1
+            <div className="input-block">
+              <div className="input-label">Jméno hráče 1</div>
               <input
                 value={tempNames.player1}
                 onChange={e => setTempNames(n => ({ ...n, player1: e.target.value }))}
                 placeholder="Hráč 1"
               />
-            </label>
-            <label className="input-row">Jméno hráče 2
+            </div>
+            <div className="input-block">
+              <div className="input-label">Jméno hráče 2</div>
               <input
                 value={tempNames.player2}
                 onChange={e => setTempNames(n => ({ ...n, player2: e.target.value }))}
                 placeholder="Hráč 2"
               />
-            </label>
-            <div className="modal-footer between">
+            </div>
+            <div className="modal-footer center">
               <button className="close-btn" onClick={confirmNames}>Potvrdit</button>
             </div>
           </div>
@@ -330,6 +352,17 @@ function App() {
             <div className="modal-footer between">
               <button className="confirm-btn" onClick={doRestart}>Ano, restart</button>
               <button className="cancel-btn" onClick={cancelRestart}>Zrušit</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showWinModal && !showNameModal && !showRestartModal && (
+        <div className="modal-overlay">
+          <div className="modal win-modal">
+            <h2>{winnerName ? `Vyhrál ${winnerName}` : 'Je to remíza, dejte si panáka'}</h2>
+            <div className="modal-footer center">
+              <button className="close-btn" onClick={startNewGameFromWin}>Začít novou hru</button>
             </div>
           </div>
         </div>
