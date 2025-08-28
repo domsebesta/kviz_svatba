@@ -246,82 +246,58 @@
         "answered": false
       },
       {
-        "question": "Jak opilí jsou novomanželé?",
-        "answers": [
-          "Divadlo na Vinohradech",
-          "Národní divadlo",
-          "Divadlo Semafor",
-          "Stavovské divadlo"
-        ],
-        "correctAnswer": 1,
-        "pointValue": 10,
-        "answered": false
+        "name": "Jak opilí jsou novomanželé?",
+        "questions": [
+          {
+            "media": {
+              "type": "image",
+              "path": "media/foto_1.jpg"
+            },
+            "prompt": "Jak moc si Honza užil tento okamžik? (1 = utrpení, 10 = absolutní blaho)",
+            "correctAnswer": 9,
+            "pointValue": 3,
+            "answered": false
+          },
+          {
+            "media": {
+              "type": "image",
+              "path": "media/foto_2.jpg"
+            },
+            "prompt": "Na stupnici 1-10, jak moc byla Naty překvapená?",
+            "correctAnswer": 10,
+            "pointValue": 3,
+            "answered": false
+          },
+          {
+            "media": {
+              "type": "video",
+              "path": "media/video_1.mp4"
+            },
+            "prompt": "Ohodnoťte Honzův taneční styl na škále 1-10 (1 = prkno, 10 = Travolta).",
+            "correctAnswer": 4,
+            "pointValue": 3,
+            "answered": false
+          },
+          {
+            "media": {
+              "type": "image",
+              "path": "media/foto_3.jpg"
+            },
+            "prompt": "Kolik panáků v sobě měla Naty v momentě focení? (Odpovězte číslem 1-10)",
+            "correctAnswer": 7,
+            "pointValue": 3,
+            "answered": false
+          },
+          {
+            "media": {
+              "type": "image",
+              "path": "media/foto_4.jpg"
+            },
+            "prompt": "Jak moc se sem chtěl vrátit Honza? (1 = nikdy více, 10 = hned zítra)",
+            "correctAnswer": 2,
+            "pointValue": 3,
+            "answered": false
+          }
+        ]
       }
     ]
-  },
-  {
-    "name": "Sport",
-    "questions": [
-      {
-        "question": "Který sport je spojen s Wimbledonem?",
-        "answers": [
-          "Fotbal",
-          "Golf",
-          "Tenis",
-          "Kriket"
-        ],
-        "correctAnswer": 2,
-        "pointValue": 10,
-        "answered": false
-      },
-      {
-        "question": "Kolik hráčů je v jednom hokejovém týmu na ledě při hře?",
-        "answers": [
-          "5",
-          "6",
-          "7",
-          "11"
-        ],
-        "correctAnswer": 1,
-        "pointValue": 15,
-        "answered": false
-      },
-      {
-        "question": "Který český hokejista je známý pod číslem 68?",
-        "answers": [
-          "Dominik Hašek",
-          "Patrik Eliáš",
-          "Jaromír Jágr",
-          "David Pastrňák"
-        ],
-        "correctAnswer": 2,
-        "pointValue": 10,
-        "answered": false
-      },
-      {
-        "question": "Jak dlouhý je běžecký maraton?",
-        "answers": [
-          "21.0975 km",
-          "35 km",
-          "42.195 km",
-          "50 km"
-        ],
-        "correctAnswer": 2,
-        "pointValue": 25,
-        "answered": false
-      },
-      {
-        "question": "Ve kterém sportu proslula Ester Ledecká?",
-        "answers": [
-          "Biatlon a rychlobruslení",
-          "Sjezdové lyžování a snowboarding",
-          "Běh na lyžích a skoky na lyžích",
-          "Tenis a plavání"
-        ],
-        "correctAnswer": 1,
-        "pointValue": 20,
-        "answered": false
-      }
-    ]
-  }
-]
