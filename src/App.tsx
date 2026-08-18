@@ -255,8 +255,6 @@ function App() {
               </span>
             </div>
 
-            <span className="head__spacer" />
-
             <div className="scores">
               <div className="scores__cards">
                 {renderScoreCard(1)}
@@ -269,8 +267,6 @@ function App() {
                 </p>
               )}
             </div>
-
-            <span className="head__spacer" />
 
             <div className="meta">
               <div className="progress">

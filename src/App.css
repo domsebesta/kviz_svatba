@@ -74,16 +74,15 @@
 
 /* ---------- hlavička ---------- */
 
+/* Mřížka 1fr auto 1fr drží skóre přesně na středu desky bez ohledu na to,
+   jak široké je logo vlevo a progress vpravo. Pružné výplně to nesvedou –
+   ty vycentrují skóre mezi krajní bloky, ne na střed desky. */
 .head {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 20px;
   width: 100%;
-}
-
-.head__spacer {
-  flex: 1 1 0;
 }
 
 .kicker {
@@ -102,6 +101,7 @@
   align-items: center;
   gap: 12px;
   flex-shrink: 0;
+  justify-self: start;
 }
 
 .brand__mono {
@@ -139,6 +139,7 @@
   align-items: center;
   gap: 6px;
   flex-shrink: 0;
+  justify-self: center;
 }
 
 .scores__cards {
@@ -242,6 +243,7 @@
   align-items: flex-end;
   gap: 7px;
   flex-shrink: 0;
+  justify-self: end;
 }
 
 .progress {
@@ -909,19 +911,15 @@
 
 @media (max-width: 900px) {
   .head {
-    flex-wrap: wrap;
-    justify-content: center;
+    grid-template-columns: 1fr;
+    justify-items: center;
     gap: 14px;
-  }
-
-  .head__spacer {
-    display: none;
   }
 
   .brand,
   .scores,
   .meta {
-    flex: 1 1 auto;
+    justify-self: center;
   }
 
   .meta {

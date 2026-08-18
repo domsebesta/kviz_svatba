@@ -1,4 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 28" width="132" height="28" fill="none">
+<!-- Kresba zabira jen cast puvodniho ramecku 132x28 (bbox x 4.05-91.98, y 2.72-21.02),
+     takze byla o 17.98 px vlevo a 2.13 px nad stredem. viewBox je proto posunuty,
+     aby ornament sedel presne na stred sve plochy. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-17.98 -2.13 132 28" width="132" height="28" fill="none">
 <g transform="translate(38.588 6.260) scale(0.999944 0.999998) translate(0.000002 -0.000000)"><path
                   d="M6.81738 11.02702c-2.56216-1.81621-4.44324-1.58919-6.25946-5.05945-0.77837-2.14054-0.58379-3.85946-0.35675-5.96757"
                   fill="none"
