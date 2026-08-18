@@ -1,310 +1,273 @@
 [
   {
-    "name": "Společný život novomanželů",
+    "name": "Ríša",
+    "longName": "Otázky na Ríšu",
     "questions": [
       {
-        "question": "Kde byl jejich první společný byt?",
+        "question": "Co dělal Ríša za sport a jaké dosáhl úrovně?",
         "answers": [
-          "Luxusní penthouse na Vinohradech",
-          "Garsonka na Jižním Městě",
-          "Podkrovní byt na Žižkově",
-          "Karlínské sklepení"
-        ],
-        "correctAnswer": 3,
-        "pointValue": 1,
-        "answered": false
-      },
-      {
-        "question": "Už je to nějaký pátek, co se ti dva poznali. Jak dlouho už to ale vlastně je?",
-        "answers": [
-          "15 let",
-          "9 let",
-          "12 let",
-          "6 let"
-        ],
-        "correctAnswer": 0,
-        "pointValue": 2,
-        "answered": false
-      },
-      {
-        "question": "Oba milují psy a už mají vybráno! Pokud by se rozhodli si psa pořídit, jaké plemeno chlupáče by jim mělo dělat radost (a nepořádek)?",
-        "answers": [
-          "Zlatý retrívr",
-          "Čivava v kabelce",
-          "Kanadský retrívr",
-          "Australský ovčák"
-        ],
-        "correctAnswer": 2,
-        "pointValue": 3,
-        "answered": false
-      },
-      {
-        "question": "I v té největší lásce existují neshody. Na které věci se ti dva rozhodně nikdy neshodnou?",
-        "answers": [
-          "Ananas na pizze",
-          "Kdo bude řídit cestou z hospody",
-          "Beraní vs. kozí rohy",
-          "Správný recept na bramborový salát"
-        ],
-        "correctAnswer": 2,
-        "pointValue": 4,
-        "answered": false
-      },
-      {
-        "question": "Brzy se opět vydají pryč z jejich bydlení v Praze! Ve které obci zapouštějí kořeny a plánují stavět?",
-        "answers": [
-          "Lety",
-          "Měňany",
-          "Řevnice",
-          "Zadní Třebaň"
+          "Karate, hnědý pásek",
+          "Taekwondo, černý pásek",
+          "Judo, modrý pásek",
+          "Box, amatérská liga"
         ],
         "correctAnswer": 1,
-        "pointValue": 5,
+        "answered": false
+      },
+      {
+        "question": "Co divného se v mládí naučil?",
+        "answers": [
+          "Žongloval s hořícími pochodněmi",
+          "Chodil po žhavém uhlí",
+          "Jezdil na jednokolce a máchal nunchaky",
+          "Hrál na pilu a jódloval"
+        ],
+        "correctAnswer": 2,
+        "answered": false
+      },
+      {
+        "question": "Proč Ríšovi uletělo letadlo?",
+        "answers": [
+          "Zapomněl pas doma na stole",
+          "Dlouho venčil psa a nekoukal na hodinky",
+          "Spletl si terminál",
+          "Zaspal, protože si nedal budík"
+        ],
+        "correctAnswer": 1,
+        "answered": false
+      },
+      {
+        "question": "Kolikrát si zlomil ruce?",
+        "answers": [
+          "Ani jednou",
+          "2×",
+          "4×",
+          "6×"
+        ],
+        "correctAnswer": 2,
+        "answered": false
+      },
+      {
+        "question": "Čím si Ríša týden krémoval obličej?",
+        "answers": [
+          "Zubní pastou",
+          "Krémem na boty",
+          "Balzámem na vlasy",
+          "Mýdlem"
+        ],
+        "correctAnswer": 3,
+        "answered": false
+      },
+      {
+        "question": "Jaký titul má Ríša (jestli vůbec nějaký)?",
+        "answers": [
+          "AP in Entrepreneurship and Design Management",
+          "Bc. v oboru marketing",
+          "MBA z prestižní business school",
+          "Žádný, škola není pro každého"
+        ],
+        "correctAnswer": 0,
         "answered": false
       }
     ]
   },
   {
-    "name": "Honzíkova cesta",
+    "name": "Společný život",
+    "longName": "Společný život",
     "questions": [
       {
-        "question": "Honza je od mala skrytý bojovník! Jak se jmenuje a odkud pochází bojové umění, kterému se věnoval?",
+        "question": "Jak se seznámili?",
         "answers": [
-          "Karate, Japonsko",
-          "Kung-fu, Čína",
-          "Capoeira, Brazílie",
-          "Taekwondo, Korea"
+          "Na Tinderu při nudném čtvrtku",
+          "Seznámil nás kamarád Míra",
+          "V tělocvičně na tréninku",
+          "Na svatbě společných přátel"
         ],
-        "correctAnswer": 3,
-        "pointValue": 1,
+        "correctAnswer": 1,
         "answered": false
       },
       {
-        "question": "Když Honza poprvé uviděl film Zohan, rozhodl se, že bude dělat vlasy hedvábně hebké. Na kom/čem se učil dělat profesionální účesy?",
+        "question": "Kdo víc mluví doma?",
         "answers": [
-          "Na alpakách",
-          "Na ovcích",
-          "Na sobě",
-          "Na psech"
+          "Ríša",
+          "Týnka",
+          "Oba stejně, jen každý o něčem jiném"
         ],
         "correctAnswer": 0,
-        "pointValue": 2,
         "answered": false
       },
       {
-        "question": "Honza není žádný troškař a míří vysoko. Do jaké maximální nadmořské výšky se mu podařilo vyšplhat?",
+        "question": "Kdo vaří a kdo předstírá, že pomáhá?",
         "answers": [
-          "4810 m",
-          "5895 m",
-          "8848 m",
-          "6470 m"
+          "Týnka vaří, Ríša „pomáhá“",
+          "Vaří oba a hádají se u toho",
+          "Ríša vaří, Týnka „pomáhá“",
+          "Nevaří nikdo, vládne rozvoz"
+        ],
+        "correctAnswer": 2,
+        "answered": false
+      },
+      {
+        "question": "Na čem si společně ujíždíme?",
+        "answers": [
+          "Víno a sýry",
+          "Sladké a Netflix",
+          "Pivo a chipsy",
+          "Kafe a maso"
         ],
         "correctAnswer": 3,
-        "pointValue": 3,
         "answered": false
       },
       {
-        "question": "Na Honzovi je znát, že prošel americkým školním systémem. Ve kterém americkém státě Honza rok studoval?",
+        "question": "Komu skončila vajíčka na stropě při vaření?",
         "answers": [
-          "Kalifornie",
-          "Colorado",
-          "Texas",
-          "Florida"
+          "Ríšovi",
+          "Týnce"
         ],
         "correctAnswer": 1,
-        "pointValue": 4,
         "answered": false
       },
       {
-        "question": "Honza je velice šikovný chlapec, jen rád dokazuje že mozek opravdu má. Kolikrát se mu povedlo mít otřes mozku?",
+        "question": "Komu skončil česnek na stropě při vaření?",
         "answers": [
-          "Ani jednou, je nesmrtelný",
-          "3x - snowboard, Taekwondo a upadnutí",
-          "Jen jednou, při pádu z barové stoličky",
-          "Pětkrát, už to vlastně ani nepočítá"
+          "Ríšovi",
+          "Týnce"
+        ],
+        "correctAnswer": 0,
+        "answered": false
+      },
+      {
+        "question": "Jaký kokos si zalepil vteřinovkou pusu?",
+        "answers": [
+          "Ríša",
+          "Týnka"
         ],
         "correctAnswer": 1,
-        "pointValue": 5,
+        "answered": false
+      },
+      {
+        "question": "Na co Ríša sbalil Týnku?",
+        "answers": [
+          "Na ranní vajíčka",
+          "Na domácí palačinky",
+          "Na snídani do postele",
+          "Na kafe a cigáro"
+        ],
+        "correctAnswer": 0,
+        "answered": false
+      },
+      {
+        "question": "Kde řekla Týnka ano?",
+        "answers": [
+          "V Itálii u moře",
+          "Na Islandu",
+          "Doma v obýváku",
+          "V USA"
+        ],
+        "correctAnswer": 3,
+        "answered": false
+      },
+      {
+        "question": "Kdo chodí později spát?",
+        "answers": [
+          "Ríša",
+          "Týnka",
+          "Chodí spát spolu"
+        ],
+        "correctAnswer": 1,
+        "answered": false
+      },
+      {
+        "question": "Kde byla naše první dovolená?",
+        "answers": [
+          "All inclusive v Turecku",
+          "Kemp v Itálii",
+          "Chata na Šumavě",
+          "Hostel v Chorvatsku"
+        ],
+        "correctAnswer": 1,
+        "answered": false
+      },
+      {
+        "question": "Kdo se první zbarví do červena na sluníčku?",
+        "answers": [
+          "Ríša",
+          "Týnka",
+          "Oba, stačí pět minut"
+        ],
+        "correctAnswer": 0,
         "answered": false
       }
     ]
   },
   {
-    "name": "Na Plzeň s Naty",
+    "name": "Týnka",
+    "longName": "Otázky na Týnku",
     "questions": [
       {
-        "question": "Mimo výuky studentů v Plzni, také Naty pracovala v jedné známé pražské nemocnici. V které to bylo?",
+        "question": "Kolik budíků si Týnka musí dát, aby vstala?",
         "answers": [
-          "Nemocnice Na Bulovce",
-          "Všeobecná fakultní nemocnice",
-          "Fakultní nemocnice v Motole",
-          "Ústřední vojenská nemocnice"
-        ],
-        "correctAnswer": 2,
-        "pointValue": 1,
-        "answered": false
-      },
-      {
-        "question": "Každý má svou achillovu patu. V případě Naty je touto patou spíše jeden druh oblíbeného ovoce. Kterého?",
-        "answers": [
-          "Banány",
-          "Jahody",
-          "Kiwi",
-          "Jablka"
-        ],
-        "correctAnswer": 0,
-        "pointValue": 2,
-        "answered": false
-      },
-      {
-        "question": "Naty má super a záslužnou práci, jen málokdo ví, jak se vlastně přesně jmenuje. Jak zní její oficiální pracovní pozice??",
-        "answers": [
-          "Fyzioterapeutka pro miminka",
-          "Pediatrická logopedka",
-          "Speciální pedagožka",
-          "Dětský ergoterapeut"
-        ],
-        "correctAnswer": 3,
-        "pointValue": 3,
-        "answered": false
-      },
-      {
-        "question": "Malé tajemství odhaleno! Co za umělecké dílko si Naty nechala zvěčnit na... ehm, na pozadí?",
-        "answers": [
-          "Srdíčko",
-          "Hvězdičku",
-          "Hruštičku",
-          "Půlitr piva"
-        ],
-        "correctAnswer": 2,
-        "pointValue": 4,
-        "answered": false
-      },
-      {
-        "question": "Skromnost stranou! Ve kterém sportu o sobě Naty (možná po pár skleničkách) tvrdí, že je absolutní světová špička?",
-        "answers": [
-          "V petangu",
-          "V kulečníku",
-          "V šipkách",
-          "Ve stolním fotbálku"
-        ],
-        "correctAnswer": 2,
-        "pointValue": 5,
-        "answered": false
-      }
-    ]
-  },
-  {
-    "name": "Na cestách",
-    "questions": [
-      {
-        "question": "Jejich výlety mají jedno společné téma. Bez které aktivity si je nedovedou představit?",
-        "answers": [
-          "Ochutnávání lokálního piva",
-          "Ležení na pláži",
-          "Návštěva všech muzeí v okolí",
-          "Lezení po horách a skalách"
-        ],
-        "correctAnswer": 3,
-        "pointValue": 1,
-        "answered": false
-      },
-      {
-        "question": "Dobrodružství v Jižní Americe! Co se přihodilo, když Naty s dobrým úmyslem nakoupila místní sladkost?",
-        "answers": [
-          "Zfetovala celou rodinu Hruškovic",
-          "Zjistila, že je to sušený hmyz",
-          "Zaplatila za ni omylem stonásobek",
-          "Dostala prudkou alergickou reakci"
-        ],
-        "correctAnswer": 0,
-        "pointValue": 2,
-        "answered": false
-      },
-      {
-        "question": "Svoboda na čtyřech kolech! Jaký vůz si pořídili, aby mohli své toulavé boty vozit po světě?",
-        "answers": [
-          "Volkswagen California",
-          "Ford transit custom",
-          "Škoda Octavia Combi",
-          "Stará obytná Avie"
+          "1",
+          "3",
+          "5",
+          "Žádný, vstává sama"
         ],
         "correctAnswer": 1,
-        "pointValue": 3,
         "answered": false
       },
       {
-        "question": "Ten velký okamžik! Kde přesně se Honza pochlapil a požádal Naty o ruku? (Nestačí jen země!)",
+        "question": "Co schovává doma po bytě všude možně?",
         "answers": [
-          "Lago de Garda, Itálie",
-          "Trolltunga, Norsko",
-          "Aiguille du Midi, Francie",
-          "Montserrat, Španělsko"
+          "Sponky do vlasů",
+          "Čokoládu",
+          "Kapesníčky",
+          "Účtenky"
+        ],
+        "correctAnswer": 2,
+        "answered": false
+      },
+      {
+        "question": "Co Týnka provedla s třídní knihou?",
+        "answers": [
+          "Zabodla do ní hozenou propisku – OMYLEM",
+          "Snědla z ní stránku kvůli sázce",
+          "Schovala ji na rok do skříně",
+          "Přepsala si v ní známku"
+        ],
+        "correctAnswer": 0,
+        "answered": false
+      },
+      {
+        "question": "Kolik má tetování?",
+        "answers": [
+          "2",
+          "3",
+          "5",
+          "8"
+        ],
+        "correctAnswer": 2,
+        "answered": false
+      },
+      {
+        "question": "Na jakých největších jevištích v Praze Týnka tancovala?",
+        "answers": [
+          "Rudolfinum a Obecní dům",
+          "Forum Karlín a O2 arena",
+          "Divadlo ABC a Hybernia",
+          "Stavovské divadlo a Laterna magika Národního divadla"
         ],
         "correctAnswer": 3,
-        "pointValue": 4,
         "answered": false
       },
       {
-        "question": "Nic složitého. Kam se chystají po tomhle víkendu vyrazit?",
+        "question": "Kde byla Týnka na stáži?",
         "answers": [
-          "Na pivko do Plzně",
-          "Na výšlap do Německa",
-          "Do Rakouských Alp",
-          "To ještě ani oni netuší"
+          "V Anglii – Royal Ballet School",
+          "V Rusku – Vaganova Academy",
+          "V Belgii – Royal Koninklijke Ballet School Antwerp",
+          "V Nizozemsku – Dutch National Ballet Academy"
         ],
-        "correctAnswer": 3,
-        "pointValue": 5,
-        "answered": false
-      }
-    ]
-  },
-  {
-    "name": "Jak opilí jsou novomanželé?",
-    "questions": [
-      {
-        "media": {
-          "type": "image",
-          "path": "src/assets/fotka1.jpeg"
-        },
-        "correctAnswer": 5,
-        "pointValue": 1,
-        "answered": false
-      },
-      {
-        "media": {
-          "type": "video",
-          "path": "src/assets/fotka2.mp4"
-        },
-        "correctAnswer": 8,
-        "pointValue": 2,
-        "answered": false
-      },
-      {
-        "media": {
-          "type": "image",
-          "path": "src/assets/fotka3.jpeg"
-        },
-        "correctAnswer": 6,
-        "pointValue": 3,
-        "answered": false
-      },
-      {
-        "media": {
-          "type": "video",
-          "path": "src/assets/fotka4.mp4"
-        },
-        "correctAnswer": 10,
-        "pointValue": 4,
-        "answered": false
-      },
-      {
-        "media": {
-          "type": "image",
-          "path": "src/assets/fotka5.jpeg"
-        },
-        "correctAnswer": 7,
-        "pointValue": 5,
+        "correctAnswer": 2,
         "answered": false
       }
     ]

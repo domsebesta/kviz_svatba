@@ -1,14 +1,14 @@
 export interface Question {
   question: string;
-  answers: string[]; // proměnlivý počet (oblast 5 může mít jiný počet)
-  correctAnswer: number; // index nebo hodnota na škále (pro scale otázky)
-  pointValue: number; // 1..5
+  answers: string[]; // 2, 3 nebo 4 varianty – správná je vždy jen jedna
+  correctAnswer: number; // index do answers
   answered: boolean;
-  media?: { type: 'image' | 'video'; path: string };
-  scale?: boolean; // true pokud jde o otázku se škálou 1..10
 }
 
 export interface Category {
+  /** Krátký název pro hlavičku sloupce na desce, např. „Ríša“. */
   name: string;
+  /** Dlouhý název pro nadpis okna otázky, např. „Otázky na Ríšu“. */
+  longName: string;
   questions: Question[];
 }

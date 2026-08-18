@@ -2,11 +2,17 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import type { Category, Question } from './types';
 import rawData from '../data.json';
-import fotka1 from './assets/fotka1.jpeg';
-import video2 from './assets/fotka2.mp4';
-import fotka3 from './assets/fotka3.jpeg';
-import video4 from './assets/fotka4.mp4';
-import fotka5 from './assets/fotka5.jpeg';
+import monogram from './assets/monogram.svg';
+import ornament from './assets/ornament.svg';
+import {
+  IconArrowBack,
+  IconCancel,
+  IconCheck,
+  IconCheckCircle,
+  IconRefresh,
+  IconRestart,
+  IconTrophy,
+} from './icons';
 
 interface StoredState {
   categories: Category[];
@@ -15,54 +21,28 @@ interface StoredState {
   playerNames: { player1: string; player2: string };
 }
 
-const LS_KEY = 'quizState_v2';
+const LS_KEY = 'quizState_risa_tynka_v2';
+const DEFAULT_NAMES = { player1: 'Hráč 1', player2: 'Hráč 2' };
+const POINTS_PER_QUESTION = 1;
 
-const mediaMap: Record<string, string> = {
-  'fotka1.jpeg': fotka1,
-  'fotka2.mp4': video2,
-  'fotka3.jpeg': fotka3,
-  'fotka4.mp4': video4,
-  'fotka5.jpeg': fotka5,
-};
+/** Datum a místo v patičce desky – převzato z grafického návrhu. */
+const WEDDING_FOOTER = '22. srpna 2026 · Penzion Na Kmíně';
 
-function resolveMediaPath(p: string) {
-  const file = p.split('/').pop() || p;
-  if (mediaMap[file]) return mediaMap[file];
-  // fallback na původní chování (dev mód může obsloužit /src/assets/* )
-  if (p.startsWith('src/')) return '/' + p; // dev server
-  return p;
-}
+const ANSWER_KEYS = ['A', 'B', 'C', 'D'];
 
-// Použijeme všech 5 okruhů; 5. může mít odlišnou strukturu (zatím placeholdery pro budoucí úpravy).
+/* Referenční rozměry grafického návrhu (1280 × 640 plus rezerva). Na větších
+   obrazovkách deska neroste do šířky – dlaždice by se roztáhly – ale škáluje se
+   proporcionálně, takže velký monitor vypadá stejně jako 14" notebook, jen větší. */
+const BOARD_REF_W = 1300;
+const BOARD_REF_H = 660;
+const MAX_SCALE = 1.9;
+
 function loadInitialCategories(): Category[] {
-  const base: any[] = rawData as any[];
-  return base.slice(0, 5).map((cat) => {
-    const questions = (cat.questions || []).map((q: any) => {
-      if (Array.isArray(q.answers)) {
-        return q; // standardní otázka
-      }
-      if (q.media) {
-        // Škálová mediální otázka (1-10)
-        return {
-          question: 'Ohodnoť (1 - 10)',
-          answers: [],
-          correctAnswer: q.correctAnswer, // hodnota 1..10
-          pointValue: q.pointValue || 0,
-            answered: q.answered ?? false,
-          media: q.media,
-          scale: true
-        } as Question;
-      }
-      return {
-        question: q.prompt || 'Speciální otázka (brzy)',
-        answers: ['—', '—', '—', '—'],
-        correctAnswer: -1,
-        pointValue: q.pointValue || 0,
-        answered: true
-      } as Question;
-    }).sort((a: any, b: any) => a.pointValue - b.pointValue);
-    return { name: cat.name, questions };
-  });
+  return (rawData as Category[]).map(cat => ({
+    name: cat.name,
+    longName: cat.longName,
+    questions: cat.questions.map(q => ({ ...q, answered: false })),
+  }));
 }
 
 function restoreState(): StoredState | null {
@@ -80,294 +60,492 @@ function persist(state: StoredState) {
 }
 
 function App() {
-  const restored = restoreState();
+  // localStorage se čte právě jednou, při mountu
+  const [restored] = useState<StoredState | null>(restoreState);
+
   const [categories, setCategories] = useState<Category[]>(
-    restored?.categories ?? loadInitialCategories()
+    restored?.categories ?? loadInitialCategories
   );
   const [scores, setScores] = useState<{ player1: number; player2: number }>(
     restored?.scores ?? { player1: 0, player2: 0 }
   );
   const [activePlayer, setActivePlayer] = useState<1 | 2>(restored?.activePlayer ?? 1);
-  const [playerNames, setPlayerNames] = useState<{ player1: string; player2: string }>(
-    restored?.playerNames ?? { player1: 'Hráč 1', player2: 'Hráč 2' }
-  );
-  const [showNameModal, setShowNameModal] = useState<boolean>(!restored);
+  const [playerNames, setPlayerNames] = useState(restored?.playerNames ?? DEFAULT_NAMES);
+  const [tempNames, setTempNames] = useState(restored?.playerNames ?? DEFAULT_NAMES);
+
+  const [showNameModal, setShowNameModal] = useState(!restored);
   const [showRestartModal, setShowRestartModal] = useState(false);
+  const [showWinModal, setShowWinModal] = useState(false);
   const [modal, setModal] = useState<{ categoryIndex: number; questionIndex: number } | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [answerEvaluated, setAnswerEvaluated] = useState(false);
-  const [tempNames, setTempNames] = useState({ player1: playerNames.player1, player2: playerNames.player2 });
-  const [showWinModal, setShowWinModal] = useState(false);
 
-  // Persist
   useEffect(() => {
     persist({ categories, scores, activePlayer, playerNames });
   }, [categories, scores, activePlayer, playerNames]);
 
+  useEffect(() => {
+    const fit = () => {
+      const raw = Math.min(window.innerWidth / BOARD_REF_W, window.innerHeight / BOARD_REF_H);
+      const scale = Math.min(Math.max(raw, 1), MAX_SCALE);
+      document.documentElement.style.setProperty('--board-scale', String(scale));
+    };
+    fit();
+    window.addEventListener('resize', fit);
+    return () => window.removeEventListener('resize', fit);
+  }, []);
+
+  // Průběžné číslování 1–24 přes všechny okruhy, v pořadí sloupců na desce.
+  const startNumbers: number[] = [];
+  let running = 0;
+  for (const cat of categories) {
+    startNumbers.push(running);
+    running += cat.questions.length;
+  }
+  const totalQuestions = running;
+
+  const answeredCount = categories.reduce(
+    (sum, c) => sum + c.questions.filter(q => q.answered).length,
+    0
+  );
+  const allAnswered = totalQuestions > 0 && answeredCount === totalQuestions;
+  const progressPct = totalQuestions === 0 ? 0 : (answeredCount / totalQuestions) * 100;
+
+  const winnerNumber =
+    scores.player1 === scores.player2 ? null : scores.player1 > scores.player2 ? 1 : 2;
+  const winnerName =
+    winnerNumber === 1 ? playerNames.player1 : winnerNumber === 2 ? playerNames.player2 : null;
+
+  const currentQuestion: Question | null = modal
+    ? categories[modal.categoryIndex].questions[modal.questionIndex]
+    : null;
+  const currentCategory: Category | null = modal ? categories[modal.categoryIndex] : null;
+  const currentNumber = modal ? startNumbers[modal.categoryIndex] + modal.questionIndex + 1 : 0;
+
+  const activeName = activePlayer === 1 ? playerNames.player1 : playerNames.player2;
+
   const openQuestion = (cIdx: number, qIdx: number) => {
-    const q = categories[cIdx].questions[qIdx];
-    if (q.answered) return;
+    if (categories[cIdx].questions[qIdx].answered) return;
     setModal({ categoryIndex: cIdx, questionIndex: qIdx });
     setSelectedAnswer(null);
     setAnswerEvaluated(false);
   };
 
-  const currentQuestion: Question | null = modal
-    ? categories[modal.categoryIndex].questions[modal.questionIndex]
-    : null;
-
   const handleAnswer = (answerIdx: number) => {
-    if (!currentQuestion || answerEvaluated) return;
+    if (!modal || !currentQuestion || answerEvaluated) return;
     setSelectedAnswer(answerIdx);
-    const isCorrect = currentQuestion.scale
-      ? answerIdx === currentQuestion.correctAnswer // u škálové otázky je přímo hodnota
-      : answerIdx === currentQuestion.correctAnswer; // u standardní index
 
-    // Aktualizace categories (answered = true) a skóre pokud správně
-    setCategories(prev => prev.map((cat, ci) => {
-      if (ci !== modal!.categoryIndex) return cat;
-      return {
-        ...cat,
-        questions: cat.questions.map((q, qi) =>
-          qi === modal!.questionIndex ? { ...q, answered: true } : q
-        )
-      };
-    }));
-    if (isCorrect) {
-      setScores(s => activePlayer === 1
-        ? { ...s, player1: s.player1 + currentQuestion.pointValue }
-        : { ...s, player2: s.player2 + currentQuestion.pointValue }
+    const { categoryIndex, questionIndex } = modal;
+    setCategories(prev =>
+      prev.map((cat, ci) =>
+        ci !== categoryIndex
+          ? cat
+          : {
+              ...cat,
+              questions: cat.questions.map((q, qi) =>
+                qi === questionIndex ? { ...q, answered: true } : q
+              ),
+            }
+      )
+    );
+
+    if (answerIdx === currentQuestion.correctAnswer) {
+      setScores(s =>
+        activePlayer === 1
+          ? { ...s, player1: s.player1 + POINTS_PER_QUESTION }
+          : { ...s, player2: s.player2 + POINTS_PER_QUESTION }
       );
     }
     setAnswerEvaluated(true);
   };
 
   const closeModal = () => {
-    if (!answerEvaluated) return; // nelze zavřít bez odpovědi
-    // Přepnutí hráče
+    if (!answerEvaluated) return; // bez odpovědi nelze zavřít
     setActivePlayer(p => (p === 1 ? 2 : 1));
     setModal(null);
   };
 
-  const allAnswered = categories.every(c => c.questions.every(q => q.answered));
-  const winnerNumber = allAnswered && scores.player1 !== scores.player2
-    ? (scores.player1 > scores.player2 ? 1 : 2)
-    : null;
-  const winnerName = winnerNumber ? (winnerNumber === 1 ? playerNames.player1 : playerNames.player2) : null;
+  const showWinner = () => {
+    setModal(null);
+    setShowWinModal(true);
+  };
+
+  const resetGame = () => {
+    localStorage.removeItem(LS_KEY);
+    setCategories(loadInitialCategories());
+    setScores({ player1: 0, player2: 0 });
+    setActivePlayer(1);
+    setPlayerNames(DEFAULT_NAMES);
+    setTempNames(DEFAULT_NAMES);
+    setModal(null);
+    setShowRestartModal(false);
+    setShowWinModal(false);
+    setShowNameModal(true);
+  };
 
   const confirmNames = () => {
-    const p1 = tempNames.player1.trim() || 'Hráč 1';
-    const p2 = tempNames.player2.trim() || 'Hráč 2';
-    setPlayerNames({ player1: p1, player2: p2 });
+    setPlayerNames({
+      player1: tempNames.player1.trim() || DEFAULT_NAMES.player1,
+      player2: tempNames.player2.trim() || DEFAULT_NAMES.player2,
+    });
     setShowNameModal(false);
   };
 
-  const openRestart = () => setShowRestartModal(true);
-  const cancelRestart = () => setShowRestartModal(false);
-  const doRestart = () => {
-    localStorage.removeItem(LS_KEY);
-    setCategories(loadInitialCategories());
-    setScores({ player1: 0, player2: 0 });
-    setActivePlayer(1);
-    setPlayerNames({ player1: 'Hráč 1', player2: 'Hráč 2' });
-    setTempNames({ player1: 'Hráč 1', player2: 'Hráč 2' });
-    setShowRestartModal(false);
-    setShowNameModal(true);
-    setModal(null);
-  };
+  const boardsHidden = showNameModal;
 
-  const startNewGameFromWin = () => {
-    // Reset podobně jako restart, ale rovnou otevře modal pro jména
-    localStorage.removeItem(LS_KEY);
-    setCategories(loadInitialCategories());
-    setScores({ player1: 0, player2: 0 });
-    setActivePlayer(1);
-    setPlayerNames({ player1: 'Hráč 1', player2: 'Hráč 2' });
-    setTempNames({ player1: 'Hráč 1', player2: 'Hráč 2' });
-    setShowWinModal(false);
-    setShowNameModal(true);
-    setModal(null);
-  };
-
-  const showWinner = () => {
-    setShowWinModal(true);
-    setModal(null);
+  const renderScoreCard = (player: 1 | 2, large = false) => {
+    const name = player === 1 ? playerNames.player1 : playerNames.player2;
+    const value = player === 1 ? scores.player1 : scores.player2;
+    const isActive = !allAnswered && activePlayer === player;
+    const isWinner = allAnswered && winnerNumber === player;
+    const isDraw = allAnswered && winnerNumber === null;
+    return (
+      <div
+        className={[
+          'score-card',
+          large ? 'score-card--lg' : '',
+          isActive || isWinner ? 'is-highlighted' : '',
+          isDraw ? 'is-draw' : '',
+        ]
+          .filter(Boolean)
+          .join(' ')}
+      >
+        {isActive && <span className="score-card__turn">Na tahu</span>}
+        {isWinner && large && <span className="score-card__turn">Vítěz</span>}
+        <span className="score-card__name">{name}</span>
+        <span className="score-card__value">{value}</span>
+      </div>
+    );
   };
 
   return (
-    <div className="app-wrapper">
-      <header className="top-bar">
-        <h1>Svatební kvíz</h1>
-        {/* Restart odstraněn z top baru */}
-      </header>
-      <div className="scores">
-        <div className={`score ${activePlayer === 1 ? 'active' : ''}`}>{playerNames.player1}: {scores.player1}</div>
-        <div className={`score ${activePlayer === 2 ? 'active' : ''}`}>{playerNames.player2}: {scores.player2}</div>
-      </div>
+    <>
+      <div className="stage">
+        <div className="board">
+          <header className="head">
+            <div className="brand">
+              <span className="brand__mono">
+                <img src={monogram} alt="" width={34} height={34} />
+              </span>
+              <span className="brand__text">
+                <span className="kicker">Ríša &amp; Týnka</span>
+                <h1 className="brand__title">Svatební kvíz</h1>
+              </span>
+            </div>
 
-      <div className="grid-container">
-        <button className="restart-btn grid-restart" onClick={openRestart}>Restart</button>
-        <div className={`grid ${showNameModal ? 'blurred' : ''}`} aria-hidden={showNameModal}>
-          {categories.map((cat, idx) => (
-            <div key={idx} className="cell header">{cat.name}</div>
-          ))}
-          {Array.from({ length: 5 }).map((_, row) => (
-            categories.map((cat, cIdx) => {
-              const q = cat.questions.find(q => q.pointValue === row + 1);
-              if (!q) return <div key={`${cIdx}-${row}`} className="cell empty"/>;
-              return (
+            <span className="head__spacer" />
+
+            <div className="scores">
+              <div className="scores__cards">
+                {renderScoreCard(1)}
+                <span className="scores__amp">&amp;</span>
+                {renderScoreCard(2)}
+              </div>
+              {allAnswered && (
+                <p className="scores__note">
+                  Hotovo! Všech {totalQuestions} otázek je zodpovězeno.
+                </p>
+              )}
+            </div>
+
+            <span className="head__spacer" />
+
+            <div className="meta">
+              <div className="progress">
+                <span className="progress__label">
+                  Odpovězeno {answeredCount} / {totalQuestions}
+                </span>
+                <span className="progress__track">
+                  <span className="progress__fill" style={{ width: `${progressPct}%` }} />
+                </span>
+              </div>
+              <div className="meta__actions">
+                {allAnswered && (
+                  <button type="button" className="btn-winner" onClick={showWinner}>
+                    <IconTrophy size={14} />
+                    Zobraz vítěze
+                  </button>
+                )}
                 <button
-                  key={`${cIdx}-${row}`}
-                  className={`cell question ${q.answered ? 'answered' : ''}`}
-                  disabled={q.answered || showNameModal}
-                  onClick={() => openQuestion(cIdx, cat.questions.indexOf(q))}
+                  type="button"
+                  className="btn-quiet"
+                  onClick={() => setShowRestartModal(true)}
                 >
-                  {q.pointValue}
+                  <IconRefresh size={13} />
+                  Restart
                 </button>
-              );
-            })
-          ))}
-        </div>
-      </div>
+              </div>
+            </div>
+          </header>
 
-      {modal && currentQuestion && (
-        <div className="modal-overlay">
-          <div className="modal">
-            {currentQuestion.media && (
-              <div className="media-wrapper">
-                {currentQuestion.media.type === 'image' && (
-                  <img src={resolveMediaPath(currentQuestion.media.path)} alt="media" className="media-img" />
-                )}
-                {currentQuestion.media.type === 'video' && (
-                  <video className="media-video" controls>
-                    <source src={resolveMediaPath(currentQuestion.media.path)} />
-                    Váš prohlížeč nepodporuje video.
-                  </video>
-                )}
-              </div>
-            )}
-            <h2>{currentQuestion.question}</h2>
-            {!currentQuestion.scale && (
-              <div className="answers">
-                {currentQuestion.answers.map((ans, i) => {
-                  const isSelected = selectedAnswer === i;
-                  const isCorrect = currentQuestion.correctAnswer === i;
-                  let cls = 'answer-btn';
-                  if (answerEvaluated) {
-                    if (isCorrect) cls += ' correct';
-                    if (isSelected && !isCorrect) cls += ' wrong';
-                  } else if (isSelected) {
-                    cls += ' pending';
-                  }
-                  return (
-                    <button
-                      key={i}
-                      className={cls}
-                      disabled={answerEvaluated}
-                      onClick={() => handleAnswer(i)}
-                    >
-                      {ans || <em>&nbsp;</em>}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-            {currentQuestion.scale && (
-              <div className="scale-section">
-                <div className="scale-buttons">
-                  {Array.from({ length: 10 }).map((_, idx) => {
-                    const val = idx + 1;
-                    const isSelected = selectedAnswer === val;
-                    let cls = 'scale-btn';
-                    if (answerEvaluated) {
-                      if (val === currentQuestion.correctAnswer) cls += ' correct';
-                      if (isSelected && val !== currentQuestion.correctAnswer) cls += ' wrong';
-                    } else if (isSelected) cls += ' pending';
+          <div className="rule">
+            <span className="rule__line" />
+            <img className="rule__ornament" src={ornament} alt="" width={132} height={28} />
+            <span className="rule__line" />
+          </div>
+
+          <div className="columns" aria-hidden={boardsHidden}>
+            {categories.map((cat, cIdx) => (
+              <section
+                className={`col ${cat.questions.length > 6 ? 'col--wide' : 'col--side'}`}
+                key={cat.name}
+              >
+                <div className="col__head">
+                  <h2 className="col__title">{cat.name}</h2>
+                  <span className="col__underline" />
+                </div>
+                <div className="tiles">
+                  {cat.questions.map((q, qIdx) => {
+                    const number = startNumbers[cIdx] + qIdx + 1;
                     return (
                       <button
-                        key={val}
-                        className={cls}
-                        disabled={answerEvaluated}
-                        onClick={() => handleAnswer(val)}
-                      >{val}</button>
+                        type="button"
+                        key={qIdx}
+                        className={`tile ${q.answered ? 'is-answered' : ''}`}
+                        disabled={q.answered || boardsHidden}
+                        onClick={() => openQuestion(cIdx, qIdx)}
+                        aria-label={
+                          q.answered
+                            ? `Otázka ${number} – ${cat.name} – už zodpovězená`
+                            : `Otázka ${number} – ${cat.name}`
+                        }
+                      >
+                        {!q.answered && <span className="tile__rule" />}
+                        <span className="tile__num">{number}</span>
+                        {q.answered && (
+                          <span className="tile__mark">
+                            <IconCheck size={30} />
+                          </span>
+                        )}
+                      </button>
                     );
                   })}
                 </div>
-                {answerEvaluated && (
-                  <div className={`feedback ${selectedAnswer === currentQuestion.correctAnswer ? 'ok' : 'fail'}`}>
-                    {selectedAnswer === currentQuestion.correctAnswer
-                      ? 'Máš to správně'
-                      : `Máš to špatně, správná odpověď je ${currentQuestion.correctAnswer}`}
-                  </div>
+              </section>
+            ))}
+          </div>
+
+          <span className="board__spacer" />
+
+          <footer className="foot">
+            <span className="foot__line" />
+            <span className="foot__text">{WEDDING_FOOTER}</span>
+            <span className="foot__line" />
+          </footer>
+        </div>
+      </div>
+
+      {modal && currentQuestion && currentCategory && (
+        <div className="scrim">
+          <div
+            className={`window window--q${currentQuestion.answers.length}`}
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className="window__head">
+              <p className="kicker">
+                {currentCategory.longName} · Otázka {currentNumber}
+              </p>
+              <h2 className="window__title">{currentQuestion.question}</h2>
+              <img className="window__ornament" src={ornament} alt="" width={96} height={24} />
+            </div>
+
+            <div className={`answers answers--${currentQuestion.answers.length}`}>
+              {currentQuestion.answers.map((ans, i) => {
+                const isSelected = selectedAnswer === i;
+                const isCorrect = currentQuestion.correctAnswer === i;
+                const showCorrect = answerEvaluated && isCorrect;
+                const showWrong = answerEvaluated && isSelected && !isCorrect;
+                return (
+                  <button
+                    type="button"
+                    key={i}
+                    className={[
+                      'answer',
+                      showCorrect ? 'is-correct' : '',
+                      showWrong ? 'is-wrong' : '',
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                    disabled={answerEvaluated}
+                    onClick={() => handleAnswer(i)}
+                  >
+                    <span className="answer__key">{ANSWER_KEYS[i]}</span>
+                    <span className="answer__label">{ans}</span>
+                    {showCorrect && (
+                      <span className="answer__icon">
+                        <IconCheckCircle size={19} />
+                      </span>
+                    )}
+                    {showWrong && (
+                      <span className="answer__icon">
+                        <IconCancel size={19} />
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {answerEvaluated &&
+              (selectedAnswer === currentQuestion.correctAnswer ? (
+                <p className="feedback is-ok">
+                  <IconCheckCircle size={19} />
+                  Správně! {activeName} bere bod.
+                </p>
+              ) : (
+                <p className="feedback is-fail">
+                  <IconCancel size={19} />
+                  Špatně. Správná odpověď je „
+                  {currentQuestion.answers[currentQuestion.correctAnswer]}“ – bod nikdo nebere.
+                </p>
+              ))}
+
+            {answerEvaluated ? (
+              <div className="window__foot window__foot--center">
+                {allAnswered ? (
+                  <button type="button" className="btn-primary" onClick={showWinner}>
+                    <IconTrophy size={14} />
+                    Zobraz vítěze
+                  </button>
+                ) : (
+                  <button type="button" className="btn-primary" onClick={closeModal}>
+                    <IconArrowBack size={16} />
+                    Zpět na přehled
+                  </button>
                 )}
               </div>
+            ) : (
+              <div className="window__foot">
+                <span className="foot__line foot__line--sm" />
+                <span className="kicker">Na tahu · {activeName}</span>
+                <span className="foot__line foot__line--sm" />
+              </div>
             )}
-            <div className="modal-footer">
-              {answerEvaluated ? (
-                allAnswered ? (
-                  <button className="close-btn" onClick={showWinner}>Zobraz vítěze</button>
-                ) : (
-                  <button className="close-btn" onClick={closeModal}>Zpět na přehled</button>
-                )
-              ) : (
-                <div className="hint">{currentQuestion.scale ? 'Vyber číslo 1–10...' : 'Vyber odpověď...'}</div>
-              )}
-            </div>
           </div>
         </div>
       )}
 
       {showNameModal && (
-        <div className="modal-overlay">
-          <div className="modal name-modal">
-            <h2>Nastavení hráčů</h2>
-            <div className="input-block">
-              <div className="input-label">Jméno hráče 1</div>
-              <input
-                value={tempNames.player1}
-                onChange={e => setTempNames(n => ({ ...n, player1: e.target.value }))}
-                placeholder="Hráč 1"
-              />
+        <div className="scrim">
+          <div className="window window--names" role="dialog" aria-modal="true">
+            <div className="window__head">
+              <p className="kicker">Než začneme</p>
+              <h2 className="window__title">Kdo dnes soutěží?</h2>
+              <img className="window__ornament" src={ornament} alt="" width={96} height={24} />
             </div>
-            <div className="input-block">
-              <div className="input-label">Jméno hráče 2</div>
-              <input
-                value={tempNames.player2}
-                onChange={e => setTempNames(n => ({ ...n, player2: e.target.value }))}
-                placeholder="Hráč 2"
-              />
+
+            <div className="fields">
+              <div className="field">
+                <label className="field__label" htmlFor="p1">
+                  Jméno hráče 1
+                </label>
+                <input
+                  id="p1"
+                  className="field__input"
+                  value={tempNames.player1}
+                  onChange={e => setTempNames(n => ({ ...n, player1: e.target.value }))}
+                  placeholder={DEFAULT_NAMES.player1}
+                />
+              </div>
+              <div className="field">
+                <label className="field__label" htmlFor="p2">
+                  Jméno hráče 2
+                </label>
+                <input
+                  id="p2"
+                  className="field__input"
+                  value={tempNames.player2}
+                  onChange={e => setTempNames(n => ({ ...n, player2: e.target.value }))}
+                  placeholder={DEFAULT_NAMES.player2}
+                />
+              </div>
             </div>
-            <div className="modal-footer center">
-              <button className="close-btn" onClick={confirmNames}>Potvrdit</button>
+
+            <p className="hint">
+              Jména se objeví u skóre na herní desce – kdykoli je můžeš nechat i tak, jak jsou.
+            </p>
+
+            <div className="window__foot window__foot--center">
+              <button type="button" className="btn-primary" onClick={confirmNames}>
+                Začít hrát
+              </button>
             </div>
           </div>
         </div>
       )}
 
       {showRestartModal && (
-        <div className="modal-overlay">
-          <div className="modal restart-modal">
-            <h2>Restart hry?</h2>
-            <p>Opravdu chceš začít znovu? Aktuální průběh bude smazán.</p>
-            <div className="modal-footer between">
-              <button className="confirm-btn" onClick={doRestart}>Ano, restart</button>
-              <button className="cancel-btn" onClick={cancelRestart}>Zrušit</button>
+        <div className="scrim">
+          <div className="window window--restart" role="dialog" aria-modal="true">
+            <div className="window__head">
+              <p className="kicker">Restart hry</p>
+              <h2 className="window__title">Opravdu začít znovu?</h2>
+              <img className="window__ornament" src={ornament} alt="" width={96} height={24} />
+            </div>
+
+            <span className="restart-badge">
+              <IconRestart size={22} />
+            </span>
+
+            <p className="hint">
+              Smaže se celý průběh hry – všech {totalQuestions} otázek se otevře znovu a skóre{' '}
+              {scores.player1} : {scores.player2} se vynuluje. Tuto akci nelze vzít zpět.
+            </p>
+
+            <div className="window__foot window__foot--center">
+              <button type="button" className="btn-primary" onClick={resetGame}>
+                <IconRestart size={16} />
+                Ano, začít znovu
+              </button>
+              <button
+                type="button"
+                className="btn-secondary"
+                onClick={() => setShowRestartModal(false)}
+              >
+                Zrušit
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      {showWinModal && !showNameModal && !showRestartModal && (
-        <div className="modal-overlay">
-          <div className="modal win-modal">
-            <h2>{winnerName ? `Vyhrál ${winnerName}` : 'Je to remíza, dejte si panáka'}</h2>
-            <div className="modal-footer center">
-              <button className="close-btn" onClick={startNewGameFromWin}>Začít novou hru</button>
+      {showWinModal && (
+        <div className="scrim">
+          <div className="window window--win" role="dialog" aria-modal="true">
+            <div className="window__head">
+              <p className="kicker">Konec hry</p>
+              <h2 className="window__title">
+                {winnerName ? `Vyhrál ${winnerName}!` : 'Je to remíza, dejte si panáka'}
+              </h2>
+              <img className="window__ornament" src={ornament} alt="" width={96} height={24} />
+            </div>
+
+            <div className="win-scores">
+              {renderScoreCard(1, true)}
+              <span className="win-scores__x">×</span>
+              {renderScoreCard(2, true)}
+            </div>
+
+            <p className="kicker">Všech {totalQuestions} otázek zodpovězeno</p>
+
+            <div className="window__foot window__foot--center">
+              <button type="button" className="btn-primary" onClick={resetGame}>
+                <IconRestart size={16} />
+                Nová hra
+              </button>
+              <button
+                type="button"
+                className="btn-secondary"
+                onClick={() => setShowWinModal(false)}
+              >
+                Zavřít
+              </button>
             </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
