@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import type { Category, Question } from './types';
 import rawData from '../data.json';
@@ -36,6 +36,21 @@ const ANSWER_KEYS = ['A', 'B', 'C', 'D'];
 const BOARD_REF_W = 1300;
 const BOARD_REF_H = 660;
 const MAX_SCALE = 1.9;
+
+/**
+ * Zaměří prvek, jakmile se okno otevře, aby ho šlo potvrdit Enterem
+ * bez sahání po myši. U oken s ničivou akcí míří na bezpečnou volbu.
+ */
+function useFocusWhen<T extends HTMLElement>(active: boolean) {
+  const ref = useRef<T | null>(null);
+  useEffect(() => {
+    // Efekt běží až po vykreslení do DOM, takže je ref už navázaný.
+    // Záměrně bez requestAnimationFrame – ten prohlížeč v neaktivní
+    // záložce nebo okně škrtí a fokus by se pak nenastavil vůbec.
+    if (active) ref.current?.focus();
+  }, [active]);
+  return ref;
+}
 
 function loadInitialCategories(): Category[] {
   return (rawData as Category[]).map(cat => ({
@@ -94,6 +109,13 @@ function App() {
     window.addEventListener('resize', fit);
     return () => window.removeEventListener('resize', fit);
   }, []);
+
+  // Co Enter potvrdí v otevřeném okně. U restartu a nové hry záměrně
+  // míří na bezpečnou volbu – smazat rozehranou hru musí jít jen kliknutím.
+  const questionPrimaryRef = useFocusWhen<HTMLButtonElement>(!!modal && answerEvaluated);
+  const nameInputRef = useFocusWhen<HTMLInputElement>(showNameModal);
+  const restartCancelRef = useFocusWhen<HTMLButtonElement>(showRestartModal);
+  const winCloseRef = useFocusWhen<HTMLButtonElement>(showWinModal);
 
   // Průběžné číslování 1–24 přes všechny okruhy, v pořadí sloupců na desce.
   const startNumbers: number[] = [];
@@ -404,12 +426,22 @@ function App() {
             {answerEvaluated ? (
               <div className="window__foot window__foot--center">
                 {allAnswered ? (
-                  <button type="button" className="btn-primary" onClick={showWinner}>
+                  <button
+                    type="button"
+                    className="btn-primary"
+                    onClick={showWinner}
+                    ref={questionPrimaryRef}
+                  >
                     <IconTrophy size={14} />
                     Zobraz vítěze
                   </button>
                 ) : (
-                  <button type="button" className="btn-primary" onClick={closeModal}>
+                  <button
+                    type="button"
+                    className="btn-primary"
+                    onClick={closeModal}
+                    ref={questionPrimaryRef}
+                  >
                     <IconArrowBack size={16} />
                     Zpět na přehled
                   </button>
@@ -428,7 +460,15 @@ function App() {
 
       {showNameModal && (
         <div className="scrim">
-          <div className="window window--names" role="dialog" aria-modal="true">
+          <form
+            className="window window--names"
+            role="dialog"
+            aria-modal="true"
+            onSubmit={e => {
+              e.preventDefault();
+              confirmNames();
+            }}
+          >
             <div className="window__head">
               <p className="kicker">Než začneme</p>
               <h2 className="window__title">Kdo dnes soutěží?</h2>
@@ -442,6 +482,7 @@ function App() {
                 </label>
                 <input
                   id="p1"
+                  ref={nameInputRef}
                   className="field__input"
                   value={tempNames.player1}
                   onChange={e => setTempNames(n => ({ ...n, player1: e.target.value }))}
@@ -467,11 +508,11 @@ function App() {
             </p>
 
             <div className="window__foot window__foot--center">
-              <button type="button" className="btn-primary" onClick={confirmNames}>
+              <button type="submit" className="btn-primary">
                 Začít hrát
               </button>
             </div>
-          </div>
+          </form>
         </div>
       )}
 
@@ -502,6 +543,7 @@ function App() {
                 type="button"
                 className="btn-secondary"
                 onClick={() => setShowRestartModal(false)}
+                ref={restartCancelRef}
               >
                 Zrušit
               </button>
@@ -538,6 +580,7 @@ function App() {
                 type="button"
                 className="btn-secondary"
                 onClick={() => setShowWinModal(false)}
+                ref={winCloseRef}
               >
                 Zavřít
               </button>
