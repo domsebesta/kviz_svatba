@@ -4,51 +4,51 @@
     "longName": "Otázky na Ríšu",
     "questions": [
       {
-        "question": "Co dělal Ríša za sport a jaké dosáhl úrovně?",
+        "question": "Ríša je od mala skrytý bojovník. Jaký sport dělal a kam to dotáhl?",
         "answers": [
-          "Karate, hnědý pásek",
-          "Taekwondo, černý pásek",
-          "Judo, modrý pásek",
-          "Box, amatérská liga"
+          "Karate – hnědý pásek",
+          "Taekwondo – černý pásek",
+          "Judo – modrý pásek",
+          "Box – amatérská liga"
         ],
         "correctAnswer": 1,
         "answered": false
       },
       {
-        "question": "Co divného se v mládí naučil?",
+        "question": "Každý má v mládí nějakou zvláštní fázi. Jakou měl Ríša?",
         "answers": [
           "Žongloval s hořícími pochodněmi",
           "Chodil po žhavém uhlí",
           "Jezdil na jednokolce a máchal nunchaky",
-          "Hrál na pilu a jódloval"
+          "Hrál na pilu a k tomu jódloval"
         ],
         "correctAnswer": 2,
         "answered": false
       },
       {
-        "question": "Proč Ríšovi uletělo letadlo?",
+        "question": "Letadlo odletělo, Ríša zůstal na zemi. Co za to mohlo?",
         "answers": [
-          "Zapomněl pas doma na stole",
-          "Dlouho venčil psa a nekoukal na hodinky",
+          "Nechal pas doma na stole",
+          "Venčil psa a nekoukal na hodinky",
           "Spletl si terminál",
-          "Zaspal, protože si nedal budík"
+          "Zaspal, budík si nedal"
         ],
         "correctAnswer": 1,
         "answered": false
       },
       {
-        "question": "Kolikrát si zlomil ruce?",
+        "question": "Ríšovy ruce mají za sebou bohatou historii. Kolikrát si je zlámal?",
         "answers": [
           "Ani jednou",
-          "2×",
-          "4×",
-          "6×"
+          "Dvakrát",
+          "Čtyřikrát",
+          "Šestkrát"
         ],
         "correctAnswer": 2,
         "answered": false
       },
       {
-        "question": "Čím si Ríša týden krémoval obličej?",
+        "question": "Celý týden si Ríša neobyčejně mazal obličej. Čím to bylo?",
         "answers": [
           "Zubní pastou",
           "Krémem na boty",
@@ -59,12 +59,12 @@
         "answered": false
       },
       {
-        "question": "Jaký titul má Ríša (jestli vůbec nějaký)?",
+        "question": "Jaký titul Ríša dokázal získat?",
         "answers": [
           "AP in Entrepreneurship and Design Management",
           "Bc. v oboru marketing",
           "MBA z prestižní business school",
-          "Žádný, škola není pro každého"
+          "Žádný – škola není pro každého"
         ],
         "correctAnswer": 0,
         "answered": false
@@ -76,50 +76,50 @@
     "longName": "Společný život",
     "questions": [
       {
-        "question": "Jak se seznámili?",
+        "question": "Každý dobrý příběh má svého viníka. Kdo tenhle rozjel?",
         "answers": [
-          "Na Tinderu při nudném čtvrtku",
-          "Seznámil nás kamarád Míra",
-          "V tělocvičně na tréninku",
-          "Na svatbě společných přátel"
+          "Tinder a jeden odvážný swipe vpravo",
+          "Dohodil je kamarád Míra",
+          "Padli si do oka v tělocvičně",
+          "Svatba někoho jiného – inspirace zafungovala"
         ],
         "correctAnswer": 1,
         "answered": false
       },
       {
-        "question": "Kdo víc mluví doma?",
+        "question": "V jejich domácnosti je slyšet pořád někoho. Kdo má jasnou hlasovou převahu?",
         "answers": [
           "Ríša",
           "Týnka",
-          "Oba stejně, jen každý o něčem jiném"
+          "Oba – jen každý o něčem úplně jiném"
         ],
         "correctAnswer": 0,
         "answered": false
       },
       {
-        "question": "Kdo vaří a kdo předstírá, že pomáhá?",
+        "question": "V kuchyni má každý svou roli. Jak je to u nich rozdělené?",
         "answers": [
-          "Týnka vaří, Ríša „pomáhá“",
-          "Vaří oba a hádají se u toho",
-          "Ríša vaří, Týnka „pomáhá“",
-          "Nevaří nikdo, vládne rozvoz"
+          "Týnka vaří, Ríša ochutnává a radí",
+          "Vaří oba a hádají se u toho o koření",
+          "Ríša u plotny, Týnka v roli „pomocnice“",
+          "Nevaří nikdo, hlavní slovo má rozvoz"
         ],
         "correctAnswer": 2,
         "answered": false
       },
       {
-        "question": "Na čem si společně ujíždíme?",
+        "question": "Každý pár má svou neřest. Na čem ujíždějí tihle dva?",
         "answers": [
-          "Víno a sýry",
-          "Sladké a Netflix",
-          "Pivo a chipsy",
-          "Kafe a maso"
+          "Víno a vyzrálé sýry",
+          "Sladké a seriály do noci",
+          "Pivo a chipsy k tomu",
+          "Kafe a maso – nic víc není potřeba"
         ],
         "correctAnswer": 3,
         "answered": false
       },
       {
-        "question": "Komu skončila vajíčka na stropě při vaření?",
+        "question": "Kuchyňská katastrofa pro dějepis. Komu skončila vajíčka na stropě?",
         "answers": [
           "Ríšovi",
           "Týnce"
@@ -128,7 +128,7 @@
         "answered": false
       },
       {
-        "question": "Komu skončil česnek na stropě při vaření?",
+        "question": "Strop v jejich kuchyni už viděl své. Kdo na něj dostal česnek?",
         "answers": [
           "Ríšovi",
           "Týnce"
@@ -137,7 +137,7 @@
         "answered": false
       },
       {
-        "question": "Jaký kokos si zalepil vteřinovkou pusu?",
+        "question": "Vteřinové lepidlo a chvilka nepozornosti. Kdo si zalepil pusu?",
         "answers": [
           "Ríša",
           "Týnka"
@@ -146,18 +146,18 @@
         "answered": false
       },
       {
-        "question": "Na co Ríša sbalil Týnku?",
+        "question": "Ríša si Týnku získal přes žaludek. Čím konkrétně?",
         "answers": [
-          "Na ranní vajíčka",
-          "Na domácí palačinky",
-          "Na snídani do postele",
-          "Na kafe a cigáro"
+          "Ranní vajíčka",
+          "Domácí palačinky",
+          "Snídaně do postele",
+          "Kafe a cigáro"
         ],
         "correctAnswer": 0,
         "answered": false
       },
       {
-        "question": "Kde řekla Týnka ano?",
+        "question": "Ríša se zeptal, Týnka řekla ano. Kde se to stalo?",
         "answers": [
           "V Itálii u moře",
           "Na Islandu",
@@ -168,17 +168,17 @@
         "answered": false
       },
       {
-        "question": "Kdo chodí později spát?",
+        "question": "Když jde jeden spát, druhý ještě svítí. Kdo vydrží déle?",
         "answers": [
           "Ríša",
           "Týnka",
-          "Chodí spát spolu"
+          "Chodí spát spolu, ruku v ruce"
         ],
         "correctAnswer": 1,
         "answered": false
       },
       {
-        "question": "Kde byla naše první dovolená?",
+        "question": "První společná dovolená, na kterou se nezapomíná. Kam vyrazili?",
         "answers": [
           "All inclusive v Turecku",
           "Kemp v Itálii",
@@ -189,11 +189,11 @@
         "answered": false
       },
       {
-        "question": "Kdo se první zbarví do červena na sluníčku?",
+        "question": "Na sluníčku není spravedlnost. Kdo z nich se spálí první?",
         "answers": [
           "Ríša",
           "Týnka",
-          "Oba, stačí pět minut"
+          "Oba – a stačí jim pár minut"
         ],
         "correctAnswer": 0,
         "answered": false
@@ -205,31 +205,31 @@
     "longName": "Otázky na Týnku",
     "questions": [
       {
-        "question": "Kolik budíků si Týnka musí dát, aby vstala?",
+        "question": "Ráno je pro Týnku disciplína. Kolik budíků na to potřebuje?",
         "answers": [
-          "1",
-          "3",
-          "5",
+          "Jeden",
+          "Tři",
+          "Pět",
           "Žádný, vstává sama"
         ],
         "correctAnswer": 1,
         "answered": false
       },
       {
-        "question": "Co schovává doma po bytě všude možně?",
+        "question": "Týnka má po celém bytě rozeseté zásoby jedné věci. Čeho?",
         "answers": [
-          "Sponky do vlasů",
-          "Čokoládu",
-          "Kapesníčky",
-          "Účtenky"
+          "Sponek do vlasů",
+          "Čokolády",
+          "Kapesníčků",
+          "Účtenek"
         ],
         "correctAnswer": 2,
         "answered": false
       },
       {
-        "question": "Co Týnka provedla s třídní knihou?",
+        "question": "Školní historka na věky. Co Týnka provedla s třídní knihou?",
         "answers": [
-          "Zabodla do ní hozenou propisku – OMYLEM",
+          "Zabodla do ní propisku – OMYLEM",
           "Snědla z ní stránku kvůli sázce",
           "Schovala ji na rok do skříně",
           "Přepsala si v ní známku"
@@ -238,34 +238,34 @@
         "answered": false
       },
       {
-        "question": "Kolik má tetování?",
+        "question": "Týnčina kolekce tetování má přesný počet. Jaký?",
         "answers": [
-          "2",
-          "3",
-          "5",
-          "8"
+          "Dvě",
+          "Tři",
+          "Pět",
+          "Osm"
         ],
         "correctAnswer": 2,
         "answered": false
       },
       {
-        "question": "Na jakých největších jevištích v Praze Týnka tancovala?",
+        "question": "Týnka tančila na prknech, která něco pamatují. Na kterých?",
         "answers": [
           "Rudolfinum a Obecní dům",
           "Forum Karlín a O2 arena",
           "Divadlo ABC a Hybernia",
-          "Stavovské divadlo a Laterna magika Národního divadla"
+          "Stavovské divadlo a Laterna magika ND"
         ],
         "correctAnswer": 3,
         "answered": false
       },
       {
-        "question": "Kde byla Týnka na stáži?",
+        "question": "Týnka si rozšířila obzory na stáži v zahraničí. Kde?",
         "answers": [
           "V Anglii – Royal Ballet School",
           "V Rusku – Vaganova Academy",
-          "V Belgii – Royal Koninklijke Ballet School Antwerp",
-          "V Nizozemsku – Dutch National Ballet Academy"
+          "V Belgii – Royal Ballet School Antwerp",
+          "V Nizozemsku – National Ballet Academy"
         ],
         "correctAnswer": 2,
         "answered": false
